@@ -1,1 +1,1 @@
-# projetoML2
+# Projeto Machine Learning II - Detecção de fraude em transações
