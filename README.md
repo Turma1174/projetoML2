@@ -111,7 +111,7 @@ project/
 │
 ├── assets/                 # Imagens e documentos de referencia
 ├── data/                   # Diretório para os datasets
-│   ├── diamons.csv         # Dataset original
+│   ├── diamonds.csv         # Dataset original
 │   ├── cleaned.csv         # Dataset tratado
 │   ├── train.csv           # Dataset de treino
 │   └── test.csv            # Dataset de teste
