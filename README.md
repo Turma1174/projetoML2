@@ -5,7 +5,7 @@
 <H2 align="center">
   PROJETO MACHINE LEARNING | SANTANDER CODERS 2024 | ADA TECH
   
-  Detecção de fraude em transações
+  Dataset Diamantes (Kaggle)
 </H2>
 
 
@@ -31,6 +31,8 @@
 - [Estrutura do Projeto](#estrutura-do-projeto)
 
 - [Acesso ao projeto](#acesso-ao-projeto)
+
+- [Executando o projeto](#executando)
 
 - [Colaboradores](#colaboradores)
 
@@ -67,15 +69,19 @@ git pull origin main
 
 ## Descrição do projeto
 
-Detecção de fraude em transações
+Este projeto realiza análises exploratórias, tratamento de dados e modelagem preditiva usando dados de diamantes.
 
-Para atingir os objetivos do projeto, vocês deverão entregar um notebook, que contemple as três etapas supramencionadas. Especificamente, espera-se que:
+`Origem: ` O dataset diamonds está disponível no Kaggle e faz parte do pacote ggplot2 em R. Ele foi construído para exemplificar análises de regressão, visualização de dados e modelagem estatística.
+
+`Motivação: ` A ideia é ajudar estudantes e profissionais a explorar dados reais sobre diamantes, analisando como características (como quilates, corte e cor) influenciam o preço de mercado.
+
+Para atingir os objetivos do projeto, a entrega deve contemplar as três etapas:
 
 `Descrição 1` Na etapa de análise exploratória de dados, o grupo seja capaz de entender o problema de negócio ao qual o dataset escolhido se insere, sabendo levantar perguntas de interesse, que deverão ser respondidas com embasamentos nas análises de dados (avaliações gráficas, estatísticas e afins);
 
 `Descrição 2` Para a avaliação de segmentação, espera-se que o grupo seja capaz de encontrar agrupamentos no conjunto de dados, em relação a variáveis de interesse para o problema proposto. Por exemplo, pensando em um dataset de compras de determinados produtos, é possível associar perfis de consumidores a padrões específicos de gastos? Como isso pode ser feito?;
 
-`Descrição 3` Por fim, a análise preditiva pressupõe a utilização de modelos, a escolha do grupo, para predizer a(s) variável(eis) de interesse dos problemas levantados pelo grupo. Apesar de ser interessante vocês praticarem os algoritmos estudados neste módulo, comparações com modelos previamente estudados (Machine Learning I) são sempre bem-vindas!
+`Descrição 3` Por fim, a análise preditiva pressupõe a utilização de modelos, a escolha do grupo, para predizer a(s) variável(eis) de interesse dos problemas levantados pelo grupo. Apesar de ser interessante vocês praticarem os algoritmos estudados neste módulo, comparações com modelos previamente estudados (Machine Learning I e II).
 
 ## Regras
 Com o ferramental em análise e em ciência de dados adquirido até o momento, a ideia é que, com este projeto, vocês possam avaliar um dataset sob três óptica (regras):
@@ -105,7 +111,7 @@ project/
 │
 ├── assets/                 # Imagens e documentos de referencia
 ├── data/                   # Diretório para os datasets
-│   ├── fraud.csv           # Dataset original
+│   ├── diamonds.csv         # Dataset original
 │   ├── cleaned.csv         # Dataset tratado
 │   ├── train.csv           # Dataset de treino
 │   └── test.csv            # Dataset de teste
@@ -131,6 +137,16 @@ project/
 ## Acesso ao projeto
 
 Você pode [acessar o código fonte do projeto](https://github.com/Turma1174/projetoML2/).
+
+## Executando
+
+1. Instale as dependências:
+  Para executar o pacote do Projeto Diamonds, execute via terminal/prompt:
+  
+  ```bash
+   pip install -r requirements.txt
+   python __main__.py
+  ```
 
 ## Colaboradores
 
