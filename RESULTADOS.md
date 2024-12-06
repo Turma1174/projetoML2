@@ -57,7 +57,35 @@
    - ???????????????????  
 
 2. **Quanto aos algoritmos estimados e clusterizadores:**  
-   - ???????????????????  
+   - Inicialmente, foi adotado o KMeans com a preparação das `features = ["depth", "table"]`,  que representam em porcentagem a profundidade e o diâmetro médio do diamente, respectivamente;
+   - Foram apresentados, para análises, os gráficos de Inércia X Clusters ($k$), onde `k = [2, 3, 4, 5, 6, 7, 8]`, bem como a métrica silhouette_score para cada um dos agrupamentos $k$;
+   - Considerando que a métrica inércia demonstra a dispersão dentro dos clusteres (quanto menos melhor) e a silhouette avalia a qualidade dos clusteres (entre -1 e 1, quanto maior, mais agrupados), os primeiros resultados apontaram uma Inércia para clusterização com k = 6: 26834.2886326148.
+   - Apesar dos resultados, mantemos k=5, para uma inercia de 31935.241437036213 e uma silhouette médio de 0.38, para ajustes e comparações com os 5 tipos de `'cut' = Fair (Regular), Good (Bom), Very Good (Muito Bom), Premium, Ideal`;
+   - A tabela abaixo representa uma comparação entre a feature `cut`, o label predito `labels_` e as categorias mencionadas:
+
+| **cut/labels_** | **Fair** | **Good** | **Ideal** | **Premium** | **Very Good** | **Total por cluster** | **Ajuste (%)** | **Erros** |  
+|---------|----------|----------|-----------|-------------|---------------|-----------------------|----------------|-----------|  
+| **0**   | 43       | 321      | 5040      | 3675        | 2415          | 11494                 | 43.85          | 6454      |  
+| **1**   | 37       | 430      | 13516     | 4869        | 3967          | 22819                 | 59.23          | 9303      |  
+| **2**   | 130      | 475      | 1673      | 2127        | 1317          | 5722                  | 37.17          | 3595      |  
+| **3**   | 1140     | 2709     | 250       | 230         | 2310          | 6639                  | 40.80          | 3930      |  
+| **4**   | 260      | 971      | 1072      | 2890        | 2073          | 7266                  | 39.77          | 4376      |  
+| **Total por categoria** | 1610     | 4906     | 21551     | 13791       | 12082         | 53940                 | Não se aplica            | Não se aplica        |
+
+   - Avalia-se que para as `features = ["depth", "table"]`, os agrupamentos se esplalham nas categoria, ajustando-se de forma precária.
+   - A partir deste ponto, a pesquisa toma novos rumos com a definição de outros agrupamentos e a modelagem com estimadores como DBSCane e HCA.
+   - Considerando os limites da presente pesquisa, as novas avaliações apresentaram os resultados abaixo:
+   - Os resultados mais indicados com KMeans foram: `features = ['carat', 'cut', 'depth', 'table']`, com `(k = 6)`, `inertia=1804.96` e `silhouette_score=0.64`;
+   - Com DBScan os melhores resultados, filtrando os parâmetros que apresentam os melhores **silhouette_scores** para cada conjunto de hiperparâmetros:
+
+| **eps** | **min_samples** | **n_clusters** | **noise** | **silhouette_score** |
+|---------|-----------------|----------------|-----------|----------------------|
+| 0.5     | 4               | 4              | 41        | 0.7034               |
+| 0.4     | 4               | 10             | 140       | 0.5238               |
+
+   - Essas condições de **eps** e **min_samples** geraram um bom equilíbrio entre a formação dos clusters e a consistência da análise;
+   - Por fim, considerando os limites da presente pesquisa, faz-se necessária uma continuidade de novas análises e modelagens para melhoria da predição;
+   - Modelagem no arquivo clusterizacao_kmeans.ipynb e outros_teste.ipynb;
 
 3. **Quantos às métricas do modelo:**  
    - ??????????????????? 
