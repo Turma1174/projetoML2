@@ -101,3 +101,60 @@
 
 4. **Agradecimentos:**  
    - ???????????????????
+
+5. **Tecnicas de regressão:**  
+   ## Tecnicas utilizadas
+   - Bagging - Método que combina múltiplos modelos independentes para maior robustez.
+
+Resultados:
+ MSE: 294405.62
+ R²: 0.98
+ RMSE: 542.59
+
+   - Boosting - Modelos sequenciais que corrigem erros do anterior, como Gradient Boosting e XGBoost.
+
+Resultados:
+ MSE: 280468.76
+ R²: 0.98
+ RMSE: 529.59
+
+   - SVM - Modelagem que maximiza margens e explora diferentes kernels.
+
+Resultados:
+MSE: 6938259.41
+R² Score: 0.56
+RMSE: 2634.06
+
+   - MLP Regressor - Rede neural ajustada para capturar relações complexas.
+
+Resultados:
+MSE: 335075.82
+RMSE: 578.86
+R² Score: 0.98
+
+
+5. **Classificação multipla com MLP:**  
+   ## Tecnicas utilizadas
+   
+   Estrutura: MLP com X camadas escondidas, ativação ReLU, otimizador Adam, taxa de aprendizado Y.
+
+Avaliação: Acurácia, F1-Score, Matriz de Confusão.
+
+Classification Report:
+               precision    recall  f1-score   support
+
+        Fair       0.88      0.88      0.88       335
+        Good       0.73      0.65      0.69      1004
+       Ideal       0.81      0.92      0.86      4292
+     Premium       0.67      0.74      0.70      2775
+   Very Good       0.56      0.38      0.45      2382
+
+    accuracy                           0.73     10788
+   macro avg       0.73      0.71      0.72     10788
+weighted avg       0.71      0.73      0.71     10788
+
+
+
+Matriz de Confusão: Espaço para matriz <-- está no codigo>
+Conclusão
+O MLP apresentou bom desempenho na classificação múltipla, com margens de melhoria para classes menos representadas.
