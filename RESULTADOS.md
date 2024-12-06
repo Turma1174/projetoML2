@@ -10,41 +10,77 @@
 
 ### **1.2 Representatividade no Mercado de Diamantes**
 
-- **Cenário:** O *dataset* contém mais de 53 mil registros e se baseia em métricas padrão do mercado (quilates, corte, cor, claridade e preço).  
+- **Cenário:** O *dataset* contém mais de 53 mil registros e se baseia em métricas padrão do mercado (quilates, corte, cor, claridade e preço). 
+
+   ![Dataset Original](./assets/DatasetOriginal.png)
 
 - **Limitações:** Ele pode não capturar toda a dinâmica do mercado real, como flutuações de preços baseadas em demanda, sazonalidade ou negociações específicas. Além disso, os dados podem ser simplificados e não consideram fatores como origem ética ou certificação de procedência, que afetam o valor.  
 
-- **Conclusão:** Ele é um bom ponto de partida para modelagem, mas precisaria de complementos para representar o mercado atual de forma mais robusta.  
+
+
+- **Considerações:** Ele é um bom ponto de partida para modelagem, mas precisaria de complementos para representar o mercado atual de forma mais robusta.  
 
 ### **1.3 Aspectos Importantes para Conferir no Dataset**
 
 1. **Consistência dos dados:**  
    - Verificar se todas as variáveis estão bem preenchidas e sem valores ausentes.  
-   - Identificar possíveis *outliers*, especialmente em preços e quilates.  
+   - Identificar possíveis *outliers*, especialmente em preços e quilates. 
+
+   ![Outliers dataset original](./assets/Outliers1.png)
+
+   ![Outliers após o preprocessamento](./assets/Outliers2.png)
+
 2. **Correlação entre variáveis:**  
    - Explorar a relação entre características físicas (como corte, cor, claridade) e o preço para confirmar se as tendências estão alinhadas com o mercado.  
+
+   ![Correlação](./assets/Correlacao.png)
+
+
 3. **Distribuição dos dados:**  
-   - Conferir a distribuição das variáveis contínuas (como quilates e preço) e categóricas (como corte e cor) para garantir que são representativas.  
+   - Conferir a distribuição das variáveis contínuas (como quilates e preço) e categóricas (como corte e cor) para garantir que são representativas. 
+
+   ![Distribuição](./assets/Distribuicao.png)
+
+
 4. **Qualidade da categorização:**  
    - Avaliar se as categorias de "cut", "color" e "clarity" estão claras e consistentes.
 
+   ![Qualidade](./assets/CorPreco.png)
+
 ### **1.4 Novas Features a partir das Existentes**
 
-- **Relação Preço x Quilates:** Criar uma feature com o preço por quilate para facilitar análises de custo-benefício.  
-- **Interação entre Variáveis:**  
-   - Combinar "cut", "color" e "clarity" em uma *feature* composta, como um índice de qualidade geral.  
+- **Relação Preço x Quilates:** Criar uma feature com o preço por quilate para facilitar análises de custo-benefício. 
+
+   ![Quilates](./assets/Quilates.png)
+
+- **Interação entre Variáveis:** 
+
+   - Combinar "cut", "color" e "clarity" em uma *feature* composta, como um índice de qualidade geral. 
+
    - Normalizar os preços para análise relativa dentro de categorias de corte.  
+
 - **Clusters de Preços:** Utilizar técnicas como *k-means* para categorizar os diamantes em grupos de preços similares, facilitando análises segmentadas.  
 
 ### **1.5 Pontos Relevantes**
 
 1. **Modelagem Apropriada:**  
-   - O problema principal é prever o preço (variável contínua), então os modelos de regressão (linear, árvore de decisão, *random forest*, ou *gradient boosting*) seriam os mais indicados.  
-2. **Análise de Feature Importance:**  
-   - Utilizar técnicas como SHAP ou permutação de importância para verificar o impacto de cada variável no preço.  
-3. **Engenharia de Dados:**  
-   - Considerar transformar "cut", "color" e "clarity" em variáveis numéricas ou *embeddings* categóricos para melhorar o desempenho de modelos baseados em aprendizado profundo.  
-4. **Validação e Testes:**  
+   - O problema principal é prever o preço (variável contínua), então os modelos de regressão (linear, árvore de decisão, *random forest*, ou *gradient boosting*) seriam os mais indicados. 
+   
+   ![Aprendizado](./assets/Aprendizado.png)
+
+2. **Análise de Feature Importance:** 
+
+   - Utilizar técnicas como SHAP ou permutação de importância para verificar o impacto de cada variável no preço. 
+
+3. **Engenharia de Dados:** 
+
+   - Com o Dataset limpo, considerar transformar "cut", "color" e "clarity" em variáveis numéricas ou *embeddings* categóricos para melhorar o desempenho de modelos baseados em aprendizado profundo. 
+
+   ![Dataset Limpo para Modelagem](./assets/DatasetLimpo.png)
+
+
+4. **Validação e Testes:** 
+
    - Dividir os dados com atenção (por exemplo, *stratified splitting* para manter proporções entre categorias) e validar o modelo com métricas adequadas como RMSE ou MAE.
 
 ## **2. Regressões e Classificações Preditivas**
@@ -210,7 +246,7 @@ weighted avg       0.71      0.73      0.71     10788
 
    - A partir deste ponto, a pesquisa toma novos rumos com a definição de outros agrupamentos e a modelagem com estimadores DBSCan e HCA.
 
-   - Considerando os limites da presente pesquisa, as novas avaliações apresentaram os resultados promissores.
+   - As novas avaliações apresentaram os resultados promissores.
 
    - Os resultados mais indicados com KMeans:
 
