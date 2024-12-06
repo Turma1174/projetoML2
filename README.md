@@ -16,7 +16,7 @@
 
 ## Tópicos 
 
-- [Regras de Colaboração](#regras-de-colaboracao)
+- [Regras de Colaboração](#regras-de-colaboração)
 
 - [Descrição do projeto](#descrição-do-projeto)
 
@@ -145,7 +145,7 @@ Você pode [acessar o código fonte do projeto](https://github.com/Turma1174/pro
   
   ```bash
    pip install -r requirements.txt
-   python __main__.py
+   python __main__.ipynb
   ```
 
 ## Colaboradores
