@@ -1,11 +1,3 @@
-
----
-
-### **3. `__main__.py`**
-```python
-
-# Ponto de entrada para o projeto
-
 from src import eda, analysis, correlations, plots, ml_model
 
 # Caminhos para os datasets
