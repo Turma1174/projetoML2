@@ -60,7 +60,8 @@
 ### **1.6 Considerações Finais**
 
 1. **Quanto ao DataSet:**  
-   - ???????????????????  
+   - O DataSet não tinha nenhum problema de falta de dados, então a única alteração feita foi criar _bins_ para categorizar faixas de quilates.
+   Após essa alteração
 
 2. **Quanto aos algoritmos estimados e clusterizadores:**  
    - Inicialmente, foi adotado o KMeans com a preparação das `features = ["depth", "table"]`,  que representam em porcentagem a profundidade e o diâmetro médio do diamente, respectivamente;
@@ -158,3 +159,43 @@ weighted avg       0.71      0.73      0.71     10788
 Matriz de Confusão: Espaço para matriz <-- está no codigo>
 Conclusão
 O MLP apresentou bom desempenho na classificação múltipla, com margens de melhoria para classes menos representadas.
+
+
+# PARTE SOBRE DBSCAN - ELABORADA POR ANDRÉ FILIPE (alterar esse título)
+
+Para a análise com o *DBSCAN*, foi feito duas analises distintas. Uma com a base original completa e outra com os dados pré tratados do `cleaned.csv`.
+
+A base original requer alguns tratamentos, então foi selecionado as seguintes features como parte do modelo:
+
+```
+features_numericas = ['depth', 'table', 'price']
+features_ordinais = ['color', 'cut', 'clarity']
+```
+
+Foi utilizado o *StandardScaler* nas features numéricas e o *OrdinalEncoder* nas fetures ordinais.
+
+Na sequência foi feito um preprocessador com ColumnTransformer e as features e encoders adequados.
+
+Esse preprocessador foi utilizado junto com o DBSCAN em um pipeline, na qual pode-se extrair o resultado dos labels de clusters.
+
+```
+labels = dbscan_pipeline.named_steps['dbscan'].labels_
+df['cluster'] = labels
+```
+
+A partir dos labels conseguimos o seguinte gráfico
+####Inserir gráfico `Clusters do DBSCAN com DataSet Completo` (apagar essa linha)
+
+Após a primeira tentativa, utilizou-se o método *NearestNeighbors* para estimar um melhor valor de eps, um dos hiperparâmetros do DBSCAN, com o seguinte resultado:
+
+####Inserir gráfico `Teste do Cotovelo` (apagar essa linha )
+
+Esse gráfico foi plotado com a escala de 0.00 até 2.00, que era onde estava o cotovelo, para melhor vizualização do ponto.
+O EPS selecionado foi o de 1.0.
+
+O método da silhoueta foi utilizado como seleção de parâmetros também, porém o resultado obtido não pareceu fazer sentido, com valor negativo e constante.
+
+A partir daí, foi feita a mesma analise utilizando a base de dados já processada.
+E usando o resultado de eps da etapa anterior, obteve-se o seguinte resultado:
+
+####Inserir gráfico `Cluster do DBSCAN com o DataSet Limpo` (apagar essa linha)
