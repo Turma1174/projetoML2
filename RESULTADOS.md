@@ -122,7 +122,91 @@
    R² Score: 0.98
    ```
 
-### **2.2 Modelagem para Classificação com MLP**
+### **2.2 Modelagem com Support Vector Regressor**
+
+1. **SVR** 
+
+   - Ajusta uma função (geralmente não linear) que prevê os valores da variável-alvo com base nas variáveis de entrada.
+
+2. **Pré-processamento**
+
+   - Padronização de variáveis numéricas: Ajuste para média 0 e desvio padrão 1.
+   - Codificação de variáveis categóricas: OrdinalEncoder.
+
+3. **Pipeline Integrado**
+
+   - Combinação de pré-processamento e modelo para facilitar treinamento e predição.
+   - Utilização do SVR com kernel RBF para capturar padrões não lineares nos dados.
+
+4. **Avaliação do Modelo**
+
+   ```
+   RMSE (Erro Quadrático Médio Root): Representa o erro médio da predição.
+   MSE (Erro Quadrático Médio): Média dos erros ao quadrado.
+   R² Score: Percentual de variação explicada pelo modelo.
+   ```
+
+5. **Resultados obtidos**
+
+   ```
+   RMSE: 2634.06
+   MSE:  6938259.41
+   R² Score: 0.56
+   ```
+
+6. **Gráfico de dispersão: valores reais vs previstos**
+
+   - Um bom modelo terá pontos próximos à linha diagonal vermelha, indicando que os valores previstos estão próximos aos reais.
+
+   ![Gáfico de Dispersão](assets/dispersaoSVR.png)
+
+
+### **2.3 Modelagem para Regressão com MPL**
+
+1. **Rede Neural (MLP)**
+
+   - A Rede Neural é como um cérebro de computador que aprende a partir de exemplos. Ela olha para as características dos diamantes e tenta descobrir qual é o padrão que faz o preço ser maior ou menor. Ela é muito boa em perceber coisas que são bem complicadas e difíceis de ver a olho nu.
+
+2. **Pré-processamento**
+
+   - Padronização de variáveis numéricas: StandardScaler.
+   - Codificação de variáveis categóricas: OrdinalEncoder.
+
+3. **Pipeline Integrado**
+
+   - Combinação de pré-processamento e modelo em um pipeline.
+   - Utilização do MLP Regressor, uma rede neural com as seguintes configurações:
+   - Camadas ocultas: 2 camadas (100 neurônios na primeira, 50 na segunda).
+   - Iterações máximas: 500 para garantir treinamento adequado.
+
+4. **Resultados obtidos**
+
+   ```
+   RMSE: 578.86
+   MSE: 335075.82
+   R² Score: 0.98
+   ```
+
+5. **Gráfico de Erro Residual**
+
+   - Este gráfico mostra a diferença entre os valores reais e os valores previstos. Quanto mais próximos de zero estiverem os erros, melhor.
+
+   ![gráfico de Erro Residual](assets/ErroResidualMPL.png)
+
+6. **Gráfico de Dispersão - Valores Reais vs Preditos**
+
+   - Este gráfico ajuda a ver como os valores previstos se comparam aos valores reais. Quanto mais próximos da linha reta (linha de identidade) os pontos estiverem, melhor o modelo.
+
+   ![Gráfico de Dispersão](assets/dispersaoMPL.png)
+
+
+7. **Considerações sobre a aplicação do SVR e do MPL**
+
+   - O modelo MLP provavelmente teve um desempenho melhor devido à sua capacidade de aprender padrões complexos e não lineares nas variáveis, o que é crucial para um problema desse, a previsão de preços de diamantes, onde várias interações não lineares podem estar em jogo. 
+
+   - O SVM, por outro lado, poderia se beneficiar de um ajuste mais refinado dos hiperparâmetros ou até mesmo de uma abordagem diferente para lidar com esse tipo de dado.
+
+### **2.4 Modelagem para Classificação com MLP**
 
 1. **Estrutura**: MLP com X camadas escondidas, ativação ReLU, otimizador Adam, taxa de aprendizado Y.
 
@@ -271,84 +355,4 @@ silhouette_score=0.64
 
 - Por fim, considerando os limites da presente pesquisa, faz-se necessária uma continuidade de novas análises e modelagens para melhoria da predição.
 
-# Regressão com Support Vector Regressor
-
-- O que é o SVR?
-
-O SVR tenta ajustar uma função (geralmente não linear) que prevê os valores da variável-alvo com base nas variáveis de entrada, garantindo que os desvios entre os valores previstos e os valores reais estejam dentro de uma margem de tolerância (chamada epsilon). Diferente de métodos tradicionais como regressão linear, o SVR se preocupa em minimizar o erro apenas para os pontos fora dessa margem, ignorando os que estão dentro dela.
-
-1 - Pré-processamento:
-
-- Padronização de variáveis numéricas: Ajuste para média 0 e desvio padrão 1, essencial para modelos como o SVR.
-- Codificação de variáveis categóricas: OrdinalEncoder com hierarquias definidas manualmente para capturar relações qualitativas.
-
-2 - Pipeline Integrado:
-
-- Combinação de pré-processamento e modelo para facilitar treinamento e predição.
-- Utilização do SVR com kernel RBF para capturar padrões não lineares nos dados.
-
-Avaliação do Modelo
-
-- Métricas calculadas no conjunto de teste:
-- RMSE (Erro Quadrático Médio Root): Representa o erro médio da predição.
-- MSE (Erro Quadrático Médio): Média dos erros ao quadrado.
-- R² Score: Percentual de variação explicada pelo modelo.
-
-```
-Resultados obtidos:
-
-RMSE: 2634.06
-
-MSE:  6938259.41
-
-R² Score: 0.56
-```
-
-# Gráfico de dispersão: valores reais vs previstos
-
-![alt text](assets/dispersaoSVR.png)
-
-- Um bom modelo terá pontos próximos à linha diagonal vermelha, indicando que os valores previstos estão próximos aos reais.
-
-# Regressão com MPL Regressor
-
-- O que é a Rede Neural (MLP)?
-  A Rede Neural é como um cérebro de computador que aprende a partir de exemplos. Ela olha para as características dos diamantes e tenta descobrir qual é o padrão que faz o preço ser maior ou menor. Ela é muito boa em perceber coisas que são bem complicadas e difíceis de ver a olho nu.
-
-1 - Pré-processamento:
-
-- Padronização de variáveis numéricas: Utilização de StandardScaler para normalizar os valores e facilitar a convergência do modelo.
-- Codificação de variáveis categóricas: Uso de OrdinalEncoder com hierarquias definidas manualmente, garantindo que o modelo reconheça relações qualitativas.
-
-2 - Pipeline Integrado:
-
-- Combinação de pré-processamento e modelo em um pipeline.
-- Utilização do MLP Regressor, uma rede neural com as seguintes configurações:
-- Camadas ocultas: 2 camadas (100 neurônios na primeira, 50 na segunda).
-- Iterações máximas: 500 para garantir treinamento adequado.
-
-```
-Resultados obtidos:
-
-RMSE: 578.86
-
-MSE: 335075.82
-
-R² Score: 0.98
-```
-
-# Gráfico de Erro Residual
-
-![alt text](assets/ErroResidualMPL.png)
-
-- Este gráfico mostra a diferença entre os valores reais e os valores previstos. Quanto mais próximos de zero estiverem os erros, melhor.
-
-# Gráfico de Dispersão - Valores Reais vs Preditos
-
-![alt text](assets/dispersaoMPL.png)
-
-- Este gráfico ajuda a ver como os valores previstos se comparam aos valores reais. Quanto mais próximos da linha reta (linha de identidade) os pontos estiverem, melhor o modelo.
-
-# Conclusão
-
-O modelo MLP provavelmente teve um desempenho melhor devido à sua capacidade de aprender padrões complexos e não lineares nas variáveis, o que é crucial para um problema desse, a previsão de preços de diamantes, onde várias interações não lineares podem estar em jogo. O SVM, por outro lado, poderia se beneficiar de um ajuste mais refinado dos hiperparâmetros ou até mesmo de uma abordagem diferente para lidar com esse tipo de dado.
+---
