@@ -111,18 +111,17 @@ project/
 │
 ├── assets/                 # Imagens e documentos de referencia
 ├── data/                   # Diretório para os datasets
-│   ├── diamonds.csv         # Dataset original
-│   ├── cleaned.csv         # Dataset tratado
-│   ├── train.csv           # Dataset de treino
-│   └── test.csv            # Dataset de teste
-│
-├── src/                    # Diretório para funções específicas
-│   ├── eda.py              # Tratamento de dados
-│   ├── analysis.py         # Análises descritivas
-│   ├── correlations.py     # Cálculos de correlação
-│   ├── plots.py            # Criação de gráficos
-│   ├── ml_model.py         # Funções para modelagem de Machine Learning
-│   └── __init__.py         # Torna o diretório um pacote Python
+│   ├── diamonds.csv        # Dataset original
+│   └── cleaned.csv         # Dataset tratado
+│                           # Diretório para funções específicas
+├── exploratoria.ipynb      # Análises descritivas
+├── cleaned_data.ipynb      # Tratamento de dados
+├── regressao_svr.ipynb     # Modelagem de Regressão com SVM
+├── regressao_bagging.ipynb # Modelagem de Regressão com Ensemble
+├── regressao_mlp.ipynb     # Modelagem de Regressão com MLP
+├── classificacao_mlp.ipynb # Modelagem de Classificação com MLP
+├── clusterizacao_kmeans    # Modelagem de Clusterização com KMEANS
+└── clusterizacao_dbscan    # Modelagem de Clusterização com DBSCAN
 │
 ├── __main__.py             # Ponto de entrada do programa
 │
@@ -141,7 +140,8 @@ Você pode [acessar o código fonte do projeto](https://github.com/Turma1174/pro
 ## Executando
 
 1. Instale as dependências:
-  Para executar o pacote do Projeto Diamonds, execute via terminal/prompt:
+  - A execução pode demandar tempo e recursos do dispositivo local (consumo de memória ou travamento).
+  - Para executar o pacote do Projeto Diamonds, execute via terminal/prompt:
   
   ```bash
    pip install -r requirements.txt

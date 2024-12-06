@@ -1,14 +1,12 @@
-### PRINCIPAIS RESULTADOS DO PROJETO DIAMONDS
+# PRINCIPAIS RESULTADOS DO PROJETO DIAMONDS
 
----
+## 1. Exploratória do Dataset 
 
 ### **1.1 Origem e Motivação do Dataset**
 
 - **Origem:** O *dataset diamonds* está disponível no Kaggle e faz parte do pacote `ggplot2` em R. Ele foi construído para exemplificar análises de regressão, visualização de dados e modelagem estatística.  
 
 - **Motivação:** A ideia é ajudar estudantes e profissionais a explorar dados reais sobre diamantes, analisando como características (como quilates, corte e cor) influenciam o preço de mercado.  
-
----
 
 ### **1.2 Representatividade no Mercado de Diamantes**
 
@@ -17,8 +15,6 @@
 - **Limitações:** Ele pode não capturar toda a dinâmica do mercado real, como flutuações de preços baseadas em demanda, sazonalidade ou negociações específicas. Além disso, os dados podem ser simplificados e não consideram fatores como origem ética ou certificação de procedência, que afetam o valor.  
 
 - **Conclusão:** Ele é um bom ponto de partida para modelagem, mas precisaria de complementos para representar o mercado atual de forma mais robusta.  
-
----
 
 ### **1.3 Aspectos Importantes para Conferir no Dataset**
 
@@ -32,8 +28,6 @@
 4. **Qualidade da categorização:**  
    - Avaliar se as categorias de "cut", "color" e "clarity" estão claras e consistentes.
 
----
-
 ### **1.4 Novas Features a partir das Existentes**
 
 - **Relação Preço x Quilates:** Criar uma feature com o preço por quilate para facilitar análises de custo-benefício.  
@@ -41,8 +35,6 @@
    - Combinar "cut", "color" e "clarity" em uma *feature* composta, como um índice de qualidade geral.  
    - Normalizar os preços para análise relativa dentro de categorias de corte.  
 - **Clusters de Preços:** Utilizar técnicas como *k-means* para categorizar os diamantes em grupos de preços similares, facilitando análises segmentadas.  
-
----
 
 ### **1.5 Pontos Relevantes**
 
@@ -55,93 +47,50 @@
 4. **Validação e Testes:**  
    - Dividir os dados com atenção (por exemplo, *stratified splitting* para manter proporções entre categorias) e validar o modelo com métricas adequadas como RMSE ou MAE.
 
----
+## **2. Regressões e Classificações Preditivas**
 
-### **1.6 Considerações Finais**
+### **2.1 Modelagem para regressão com Ensemble e MLP**  
 
-1. **Quanto ao DataSet:**  
-   - O DataSet não tinha nenhum problema de falta de dados, então a única alteração feita foi criar _bins_ para categorizar faixas de quilates.
-   Após essa alteração
+1. **Bagging** - Método que combina múltiplos modelos independentes para maior robustez.
+      ```
+      Resultados:
+      MSE: 294405.62
+      R²: 0.98
+      RMSE: 542.59
+      ```
 
-2. **Quanto aos algoritmos estimados e clusterizadores:**  
-   - Inicialmente, foi adotado o KMeans com a preparação das `features = ["depth", "table"]`,  que representam em porcentagem a profundidade e o diâmetro médio do diamente, respectivamente;
-   - Foram apresentados, para análises, os gráficos de Inércia X Clusters ($k$), onde `k = [2, 3, 4, 5, 6, 7, 8]`, bem como a métrica silhouette_score para cada um dos agrupamentos $k$;
-   - Considerando que a métrica inércia demonstra a dispersão dentro dos clusteres (quanto menos melhor) e a silhouette avalia a qualidade dos clusteres (entre -1 e 1, quanto maior, mais agrupados), os primeiros resultados apontaram uma Inércia para clusterização com k = 6: 26834.2886326148.
-   - Apesar dos resultados, mantemos k=5, para uma inercia de 31935.241437036213 e uma silhouette médio de 0.38, para ajustes e comparações com os 5 tipos de `'cut' = Fair (Regular), Good (Bom), Very Good (Muito Bom), Premium, Ideal`;
-   - A tabela abaixo representa uma comparação entre a feature `cut`, o label predito `labels_` e as categorias mencionadas:
+2. **Boosting** - Modelos sequenciais que corrigem erros do anterior, como Gradient Boosting e XGBoost.
+      ```
+      Resultados:
+      MSE: 280468.76
+      R²: 0.98
+      RMSE: 529.59
+      ```
 
-| **cut/labels_** | **Fair** | **Good** | **Ideal** | **Premium** | **Very Good** | **Total por cluster** | **Ajuste (%)** | **Erros** |  
-|---------|----------|----------|-----------|-------------|---------------|-----------------------|----------------|-----------|  
-| **0**   | 43       | 321      | 5040      | 3675        | 2415          | 11494                 | 43.85          | 6454      |  
-| **1**   | 37       | 430      | 13516     | 4869        | 3967          | 22819                 | 59.23          | 9303      |  
-| **2**   | 130      | 475      | 1673      | 2127        | 1317          | 5722                  | 37.17          | 3595      |  
-| **3**   | 1140     | 2709     | 250       | 230         | 2310          | 6639                  | 40.80          | 3930      |  
-| **4**   | 260      | 971      | 1072      | 2890        | 2073          | 7266                  | 39.77          | 4376      |  
-| **Total por categoria** | 1610     | 4906     | 21551     | 13791       | 12082         | 53940                 | Não se aplica            | Não se aplica        |
+3.  **SVM** - Modelagem que maximiza margens e explora diferentes kernels.
+      ```
+      Resultados:
+      MSE: 6938259.41
+      R² Score: 0.56
+      RMSE: 2634.06
+      ```
 
-   - Avalia-se que para as `features = ["depth", "table"]`, os agrupamentos se esplalham nas categoria, ajustando-se de forma precária.
-   - A partir deste ponto, a pesquisa toma novos rumos com a definição de outros agrupamentos e a modelagem com estimadores como DBSCane e HCA.
-   - Considerando os limites da presente pesquisa, as novas avaliações apresentaram os resultados abaixo:
-   - Os resultados mais indicados com KMeans foram: `features = ['carat', 'cut', 'depth', 'table']`, com `(k = 6)`, `inertia=1804.96` e `silhouette_score=0.64`;
-   - Com DBScan os melhores resultados, filtrando os parâmetros que apresentam os melhores **silhouette_scores** para cada conjunto de hiperparâmetros:
+4. **MLP Regressor** - Rede neural ajustada para capturar relações complexas.
+      ```
+      Resultados:
+      MSE: 335075.82
+      RMSE: 578.86
+      R² Score: 0.98
+      ```
 
-| **eps** | **min_samples** | **n_clusters** | **noise** | **silhouette_score** |
-|---------|-----------------|----------------|-----------|----------------------|
-| 0.5     | 4               | 4              | 41        | 0.7034               |
-| 0.4     | 4               | 10             | 140       | 0.5238               |
+### **2.2 Modelagem para Classificação com MLP** 
 
-   - Essas condições de **eps** e **min_samples** geraram um bom equilíbrio entre a formação dos clusters e a consistência da análise;
-   - Por fim, considerando os limites da presente pesquisa, faz-se necessária uma continuidade de novas análises e modelagens para melhoria da predição;
-   - Modelagem no arquivo clusterizacao_kmeans.ipynb e outros_teste.ipynb;
+1. **Estrutura**: MLP com X camadas escondidas, ativação ReLU, otimizador Adam, taxa de aprendizado Y.
 
-3. **Quantos às métricas do modelo:**  
-   - ??????????????????? 
+2. **Avaliação**: Acurácia, F1-Score, Matriz de Confusão.
 
-4. **Quanto às limitações de produção:**  
-   - ???????????????????
-
-4. **Agradecimentos:**  
-   - ???????????????????
-
-5. **Tecnicas de regressão:**  
-   ## Tecnicas utilizadas
-   - Bagging - Método que combina múltiplos modelos independentes para maior robustez.
-
-Resultados:
- MSE: 294405.62
- R²: 0.98
- RMSE: 542.59
-
-   - Boosting - Modelos sequenciais que corrigem erros do anterior, como Gradient Boosting e XGBoost.
-
-Resultados:
- MSE: 280468.76
- R²: 0.98
- RMSE: 529.59
-
-   - SVM - Modelagem que maximiza margens e explora diferentes kernels.
-
-Resultados:
-MSE: 6938259.41
-R² Score: 0.56
-RMSE: 2634.06
-
-   - MLP Regressor - Rede neural ajustada para capturar relações complexas.
-
-Resultados:
-MSE: 335075.82
-RMSE: 578.86
-R² Score: 0.98
-
-
-5. **Classificação multipla com MLP:**  
-   ## Tecnicas utilizadas
-   
-   Estrutura: MLP com X camadas escondidas, ativação ReLU, otimizador Adam, taxa de aprendizado Y.
-
-Avaliação: Acurácia, F1-Score, Matriz de Confusão.
-
-Classification Report:
+3. **Classification Report**:
+```   
                precision    recall  f1-score   support
 
         Fair       0.88      0.88      0.88       335
@@ -154,48 +103,134 @@ Classification Report:
    macro avg       0.73      0.71      0.72     10788
 weighted avg       0.71      0.73      0.71     10788
 
-
-
-Matriz de Confusão: Espaço para matriz <-- está no codigo>
-Conclusão
-O MLP apresentou bom desempenho na classificação múltipla, com margens de melhoria para classes menos representadas.
-
-
-# PARTE SOBRE DBSCAN - ELABORADA POR ANDRÉ FILIPE (alterar esse título)
-
-Para a análise com o *DBSCAN*, foi feito duas analises distintas. Uma com a base original completa e outra com os dados pré tratados do `cleaned.csv`.
-
-A base original requer alguns tratamentos, então foi selecionado as seguintes features como parte do modelo:
-
-```
-features_numericas = ['depth', 'table', 'price']
-features_ordinais = ['color', 'cut', 'clarity']
 ```
 
-Foi utilizado o *StandardScaler* nas features numéricas e o *OrdinalEncoder* nas fetures ordinais.
+4. **Matriz de Confusão**:
 
-Na sequência foi feito um preprocessador com ColumnTransformer e as features e encoders adequados.
+   ![Matriz de Confusão MLP](./assets/MatrizConfusaoClassMLP.png)
 
-Esse preprocessador foi utilizado junto com o DBSCAN em um pipeline, na qual pode-se extrair o resultado dos labels de clusters.
+5. **Considerações sobre a aplicação do MLP**
 
-```
-labels = dbscan_pipeline.named_steps['dbscan'].labels_
-df['cluster'] = labels
-```
+   - O MLP apresentou bom desempenho na classificação múltipla, com margens de melhoria para classes menos representadas.
 
-A partir dos labels conseguimos o seguinte gráfico
-####Inserir gráfico `Clusters do DBSCAN com DataSet Completo` (apagar essa linha)
 
-Após a primeira tentativa, utilizou-se o método *NearestNeighbors* para estimar um melhor valor de eps, um dos hiperparâmetros do DBSCAN, com o seguinte resultado:
+## **3. Clusterizações com KMEANS e DBSCAN**
 
-####Inserir gráfico `Teste do Cotovelo` (apagar essa linha )
+### **3.1 Algoritmo de Estimativa KMEANS**
 
-Esse gráfico foi plotado com a escala de 0.00 até 2.00, que era onde estava o cotovelo, para melhor vizualização do ponto.
-O EPS selecionado foi o de 1.0.
+2. **Análise KMENS**  
+   - Inicialmente, foi adotado o KMeans com a preparação de features representam em porcentagem a profundidade e o diâmetro médio do diamente, respectivamente:
 
-O método da silhoueta foi utilizado como seleção de parâmetros também, porém o resultado obtido não pareceu fazer sentido, com valor negativo e constante.
+   ```
+   features = ["depth", "table"]`
+   ``` 
+   ![Clusterização com K=5 ](./assets/Clusters5.png)
 
-A partir daí, foi feita a mesma analise utilizando a base de dados já processada.
-E usando o resultado de eps da etapa anterior, obteve-se o seguinte resultado:
 
-####Inserir gráfico `Cluster do DBSCAN com o DataSet Limpo` (apagar essa linha)
+   - Foram apresentados, para análises, os gráficos de Inércia X Clusters ($k$), bem como a métrica silhouette_score para cada um dos agrupamentos $k$:
+
+   ```
+   k = [2, 3, 4, 5, 6, 7, 8]
+
+   ```
+
+   ![Cotovelo variando K ](./assets/CotoveloTeste.png)
+
+   
+
+   - Considerando que a métrica inércia demonstra a dispersão dentro dos clusteres (quanto menos melhor) e a silhouette avalia a qualidade dos clusteres (entre -1 e 1, quanto maior, mais agrupados), os primeiros resultados apontaram:
+
+   ![Clusterização com K=5 ](./assets/Silhueta5.png)
+   
+   - Apesar de resultados diversos, consideramos os ajustes para comparações com os 5 tipos de features:
+
+   ```
+   k=5, para uma 
+   inércia = 31935.241437036213
+   silhueta média = 0.38 
+   'cut' = Fair (Regular), Good (Bom), Very Good (Muito Bom), Premium, Ideal
+   ```
+
+   - A tabela abaixo representa uma comparação entre a feature `cut`, o label predito `labels_` e as categorias mencionadas:
+
+| **cut/labels_** | **Fair** | **Good** | **Ideal** | **Premium** | **Very Good** | **Total por cluster** | **Ajuste (%)** | **Erros** |  
+|---------|----------|----------|-----------|-------------|---------------|-----------------------|----------------|-----------|  
+| **0**   | 43       | 321      | 5040      | 3675        | 2415          | 11494                 | 43.85          | 6454      |  
+| **1**   | 37       | 430      | 13516     | 4869        | 3967          | 22819                 | 59.23          | 9303      |  
+| **2**   | 130      | 475      | 1673      | 2127        | 1317          | 5722                  | 37.17          | 3595      |  
+| **3**   | 1140     | 2709     | 250       | 230         | 2310          | 6639                  | 40.80          | 3930      |  
+| **4**   | 260      | 971      | 1072      | 2890        | 2073          | 7266                  | 39.77          | 4376      |  
+| **Total por categoria** | 1610     | 4906     | 21551     | 13791       | 12082         | 53940                 | Não se aplica            | Não se aplica        |
+
+2. **Considerações sobre a aplicação do KMENS**  
+   - Avalia-se que para as `features = ["depth", "table"]`, os agrupamentos se esplalham nas categoria, ajustando-se de forma precária.
+ 
+### **3.2 Algoritmo de Estimativa DBSCAN**
+
+1. **Análise com DBSCAN**
+
+   - Para a análise com o *DBSCAN*, foi feito duas analises distintas. Uma com a base original completa e outra com os dados pré tratados do `cleaned.csv`.
+
+   - A base original requer alguns tratamentos, então foi selecionado as seguintes features como parte do modelo:
+
+   ```
+   features_numericas = ['depth', 'table', 'price']
+   features_ordinais = ['color', 'cut', 'clarity']
+   ```
+
+   - Foi utilizado o *StandardScaler* nas features numéricas e o *OrdinalEncoder* nas fetures ordinais.
+
+   - Na sequência foi feito um preprocessador com ColumnTransformer e as features e encoders adequados.
+
+   - Esse preprocessador foi utilizado junto com o DBSCAN em um pipeline, na qual pode-se extrair o resultado dos labels de clusters.
+
+   ```
+   labels = dbscan_pipeline.named_steps['dbscan'].labels_
+   df['cluster'] = labels
+   ```
+
+   - A partir dos labels conseguimos o seguinte gráfico: 
+
+   ![Clusters do DBSCAN com DataSet Completo](./assets/ClusterDBSCAN.png)
+
+   - Após a primeira tentativa, utilizou-se o método *NearestNeighbors* para estimar um melhor valor de eps, um dos hiperparâmetros do DBSCAN, com o seguinte resultado:
+
+   ![Teste do Cotovelo](./assets/CotoveloDBSCAN.png)
+
+   - Esse gráfico foi plotado com a escala de 0.00 até 2.00, que era onde estava o cotovelo, para melhor vizualização do ponto.O EPS selecionado foi o de 1.0.
+
+   - O método da silhoueta foi utilizado como seleção de parâmetros também, porém o resultado obtido não pareceu fazer sentido, com valor negativo e constante.
+
+   - A partir daí, foi feita a mesma analise utilizando a base de dados já processada. E usando o resultado de eps da etapa anterior, obteve-se o seguinte resultado:
+
+   ![Cluster do DBSCAN com o DataSet Limpo](./assets/ClusterDBSCANLimpo.png)
+
+
+### **3.3 Considerações Finais sobre a Clusterização**
+
+   - A partir deste ponto, a pesquisa toma novos rumos com a definição de outros agrupamentos e a modelagem com estimadores DBSCan e HCA.
+
+   - Considerando os limites da presente pesquisa, as novas avaliações apresentaram os resultados promissores.
+
+   - Os resultados mais indicados com KMeans:
+
+   ```
+   features = ['carat', 'cut', 'depth', 'table']
+   k = 6 
+   inertia=1804.96
+   silhouette_score=0.64
+   ```
+
+   ![Clusterização com K=6 ](./assets/Silhueta6.png)
+
+   - Com DBScan os melhores resultados, filtrando os parâmetros que apresentam os melhores **silhouette_scores** para cada conjunto de hiperparâmetros:
+
+| **eps** | **min_samples** | **n_clusters** | **noise** | **silhouette_score** |
+|---------|-----------------|----------------|-----------|----------------------|
+| 0.5     | 4               | 4              | 41        | 0.7034               |
+| 0.4     | 4               | 10             | 140       | 0.5238               |
+
+
+   - Essas condições de **eps** e **min_samples** geraram um bom equilíbrio entre a formação dos clusters e a consistência da análise.
+
+   - Por fim, considerando os limites da presente pesquisa, faz-se necessária uma continuidade de novas análises e modelagens para melhoria da predição.
